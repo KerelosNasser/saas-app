@@ -9,10 +9,10 @@ const navItems = [
   {label: 'Subscription', href: '/subscription'},
 ]
 
-function NavItems() {
+function NavItems({mobile}: {mobile?: boolean}) {
   return (
     <nav>
-      <div className='flex items-center gap-5 text-lg font-bold '>
+      <div className={mobile ? 'flex flex-col gap-4 text-lg font-bold' : 'flex items-center gap-5 text-lg font-bold '}>
         {navItems.map((item) => (
           <Link key={item.href} href={item.href}>{item.label}</Link>
         ))}
