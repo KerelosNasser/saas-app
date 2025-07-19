@@ -25,12 +25,12 @@ import { Textarea } from "./ui/textarea"
 
 
 const formSchema = z.object({
-  username: z.string().min(1, {message: "Username is required"}),
-    Subject: z.string().min(1, {message: "subject is required"}),
-    Topic: z.string().min(1, {message: "topic is required"}),
-    Style: z.string().min(1, {message: "style is required"}), // This line was causing the error
-    Voice: z.string().min(1, {message: "voice is required"}),
-    Duration: z.coerce.number().min(1, {message: "duration is required"}),
+  name: z.string().min(1, { message: "Companion name is required" }),
+  subject: z.string().min(1, { message: "Subject is required" }),
+  topic: z.string().min(1, { message: "Topic is required" }),
+  style: z.string().min(1, { message: "Style is required" }),
+  voice: z.string().min(1, { message: "Voice is required" }),
+  duration: z.coerce.number().min(1, { message: "Duration is required" }),
 })
 
 function CompanionForm() {
@@ -38,16 +38,17 @@ function CompanionForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: " ",
-      Subject: " ",
-      Topic: " ",
-      Style: " ", // This line was causing the error
-      Voice: " ", // Default voice
-      Duration: 15,
+      name: "",
+      subject: "",
+      topic: "",
+      style: "",
+      voice: "",
+      duration: 15,
     },
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    // TODO: Handle form submission
     console.log(values)
   }
 
@@ -56,7 +57,7 @@ function CompanionForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="username"
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Companion Name</FormLabel>
@@ -69,7 +70,7 @@ function CompanionForm() {
         />
         <FormField
           control={form.control}
-          name="Subject"
+          name="subject"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Subject</FormLabel>
@@ -93,7 +94,7 @@ function CompanionForm() {
         />
         <FormField
           control={form.control}
-          name="Topic"
+          name="topic"
           render={({ field }) => (
             <FormItem>
               <FormLabel>What should companion help with ?</FormLabel>
@@ -106,7 +107,7 @@ function CompanionForm() {
         />
             <FormField
           control={form.control}
-          name="Voice"
+          name="voice"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Voice</FormLabel>
@@ -130,7 +131,7 @@ function CompanionForm() {
         />
    <FormField
           control={form.control}
-          name="Style"
+          name="style"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Style</FormLabel>
@@ -151,7 +152,7 @@ function CompanionForm() {
         />
             <FormField
           control={form.control}
-          name="Duration"
+          name="duration"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Duration</FormLabel>
