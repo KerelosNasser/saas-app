@@ -14,7 +14,7 @@ function CompanionCard({ID, name, topic, subject, duration, color }: CompanionCa
     <article className='companion-card' style={{backgroundColor: color}}>
       <div className='flex justify-between item-center'>
         <div className="subject-badge">{subject}</div>
-        <button className="companion-bookmark">
+        <button type="button" className="companion-bookmark">
           <img src="/icons/bookmark.svg" alt="bookmark" width={12.5} height={12.5} />
         </button>
       </div>
@@ -26,10 +26,8 @@ function CompanionCard({ID, name, topic, subject, duration, color }: CompanionCa
             <p className="text-sm">{duration} mins</p>
           </div>
         </div>
-        <Link href={`/companions/${ID}`} className="w-full">
-          <button className="btn-primary w-full justify-center">
-            View Companion
-          </button>
+        <Link href={`/companions/${ID}`} className="btn-primary w-full flex items-center justify-center">
+          View Companion
         </Link>
     </article>
   )

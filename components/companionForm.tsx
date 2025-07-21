@@ -2,6 +2,7 @@
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -22,6 +23,7 @@ import {
 } from "@/components/ui/select"
 import { subjects, voices } from "@/constants"
 import { Textarea } from "./ui/textarea"
+import { createCompanion } from "@/lib/actions/companions.actions"
 
 
 const formSchema = z.object({
@@ -33,27 +35,39 @@ const formSchema = z.object({
   duration: z.coerce.number().min(1, { message: "Duration is required" }),
 })
 
+// Change this line from:
+// type FormData = z.infer<typeof formSchema>
+// To:
+type CompanionFormData = z.infer<typeof formSchema>
+
 function CompanionForm() {
-     // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
+  const router = useRouter()
+  
+  const form = useForm<CompanionFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       subject: "",
       topic: "",
-      style: "",
       voice: "",
+      style: "",
       duration: 15,
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // TODO: Handle form submission
-    console.log(values)
+  async function onSubmit(values: CompanionFormData) {
+      const companion = await createCompanion(values);
+      if(companion) {
+      router.push(`/companions/${companion.id}`);
+      }
+      else{
+        console.log("error");
+        router.push('/')
+      }
   }
 
   return (
-    <Form {...form}>
+    <Form {...form}> 
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}

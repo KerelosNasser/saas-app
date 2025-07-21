@@ -1,7 +1,7 @@
 import { PricingTable } from '@clerk/nextjs'
 import React from 'react'
 
-function subscription() {
+function SubscriptionPage() {
   return (
     <div>
       <PricingTable />
@@ -9,4 +9,4 @@ function subscription() {
   )
 }
 
-export default subscription
+export default SubscriptionPage
