@@ -1,3 +1,4 @@
+import { unstable_noStore as noStore } from 'next/cache';
 import CompanionCard from "@/components/CompanionCard";
 import CompanionsList from "@/components/CompanionsList";
 import CTA from "@/components/CTA";
@@ -5,7 +6,11 @@ import {recentSessions} from "@/constants";
 import {getAllCompanions, getRecentSessions} from "@/lib/actions/companions.actions";
 import {getSubjectColor} from "@/lib/utils";
 
+// Add this export to force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 const Page = async () => {
+    noStore(); // This forces dynamic rendering
     const companions = await getAllCompanions({ limit: 3 });
     const recentSessionsCompanions = await getRecentSessions(10);
 
