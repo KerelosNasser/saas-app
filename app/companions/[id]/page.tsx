@@ -2,8 +2,11 @@ import {getCompanion} from "@/lib/actions/companions.actions";
 import {currentUser} from "@clerk/nextjs/server";
 import {redirect} from "next/navigation";
 import {getSubjectColor} from "@/lib/utils";
-import Image from "next/image"; // Already included file name 'c:/projects/Next.js Projects/saas-app/components/CompanionComponent.tsx' differs from file name 'c:/projects/Next.js Projects/saas-app/components/companionComponent.tsx' only in casing. The file is in the program because: Imported via "@/components/CompanionComponent" from file 'c:/projects/Next.js Projects/saas-app/app/companions/[id]/page.tsx' Matched by include pattern '**/*.tsx' in 'c:/projects/Next.js Projects/saas-app/tsconfig.json'
+import Image from "next/image";
 import CompanionComponent from "@/components/companionComponent";
+
+// Add this line to force dynamic rendering
+export const dynamic = 'force-dynamic';
 
 interface CompanionSessionPageProps {
     params: Promise<{ id: string}>;

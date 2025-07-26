@@ -5,6 +5,8 @@ import React from 'react'
 import SearchInput from '@/components/searchInput';
 import SubjectFilter from '@/components/subjectFilter';
 
+// Add this line to force dynamic rendering
+export const dynamic = 'force-dynamic';
 
 const companionsLibrary = async({searchParams}: SearchParams) => {
   const filters = await searchParams;

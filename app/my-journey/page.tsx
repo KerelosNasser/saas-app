@@ -10,6 +10,9 @@ import { currentUser } from '@clerk/nextjs/server';
 import { getUserCompanions, getUserSessions } from '@/lib/actions/companions.actions';
 import CompanionsList from '@/components/CompanionsList';
 
+// Add this line to force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 async function Profile() {
   const user = await currentUser();
   if (!user) {
