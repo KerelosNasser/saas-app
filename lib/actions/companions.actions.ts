@@ -121,14 +121,14 @@ export const newCompanionPermissions = async () => {
         limit = 10;
     }
 
-    const { data, error } = await supabase
+    const { count, error } = await supabase
         .from('companions')
-        .select('id', { count: 'exact' })
+        .select('*', { count: 'exact', head: true })
         .eq('author', userId)
 
     if(error) throw new Error(error.message);
 
-    const companionCount = data?.length;
+    const companionCount = count || 0;
 
     if(companionCount >= limit) {
         return false
