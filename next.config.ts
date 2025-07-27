@@ -14,7 +14,8 @@ const nextConfig: NextConfig = {
         hostname: 'img.clerk.com'
       }
     ]
-  }
+  },
+  output: 'standalone'
 };
 
 export default withSentryConfig(nextConfig, {

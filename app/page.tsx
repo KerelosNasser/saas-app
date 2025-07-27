@@ -4,9 +4,6 @@ import CTA from "@/components/CTA";
 import {getAllCompanions, getRecentSessions} from "@/lib/actions/companions.actions";
 import {getSubjectColor} from "@/lib/utils";
 
-// Add this export to force dynamic rendering
-export const dynamic = 'force-dynamic';
-
 const Page = async () => {
     const companions = await getAllCompanions({ limit: 3 });
     const recentSessionsCompanions = await getRecentSessions(10);
@@ -39,3 +36,4 @@ const Page = async () => {
 }
 
 export default Page
+export const dynamic = 'force-dynamic';
