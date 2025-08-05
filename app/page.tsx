@@ -1,11 +1,18 @@
 import CompanionCard from "@/components/CompanionCard";
 import CompanionsList from "@/components/CompanionsList";
 import CTA from "@/components/CTA";
-import {getAllCompanions, getRecentSessions} from "@/lib/actions/companions.actions";
+import {getUserCompanions, getRecentSessions} from "@/lib/actions/companions.actions";
+import { currentUser } from "@clerk/nextjs/server";
 import {getSubjectColor} from "@/lib/utils";
 
+
 const Page = async () => {
-    const companions = await getAllCompanions({ limit: 3 });
+    const user = await currentUser();
+    let companions = [];
+    if (user) {
+        companions = await getUserCompanions(user.id);
+    }
+    companions = companions.slice(0, 3);
     const recentSessionsCompanions = await getRecentSessions(10);
 
   return (

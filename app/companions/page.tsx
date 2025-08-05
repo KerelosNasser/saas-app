@@ -4,15 +4,17 @@ import { subjectsColors } from '@/constants/index';
 import React from 'react'
 import SearchInput from '@/components/searchInput';
 import SubjectFilter from '@/components/subjectFilter';
+import { auth } from '@clerk/nextjs/server';
 
 // Add this line to force dynamic rendering
 export const dynamic = 'force-dynamic';
 
 const companionsLibrary = async({searchParams}: SearchParams) => {
+  const { userId } = auth();
   const filters = await searchParams;
   const subject = filters.subject ? filters.subject : "";
   const topic = filters.topic ? filters.topic : "";
-  const companions = await getAllCompanions({subject, topic});
+  const companions = await getAllCompanions({subject, topic, userId: userId!});
 
   return (
     <main>

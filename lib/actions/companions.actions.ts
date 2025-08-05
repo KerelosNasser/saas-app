@@ -18,10 +18,10 @@ export const createCompanion = async (formData: CreateCompanion) => {
     return data[0];
 }
 
-export const getAllCompanions = async ({ limit = 10, page = 1, subject, topic }: GetAllCompanions) => {
+export const getAllCompanions = async ({ limit = 10, page = 1, subject, topic, userId }: GetAllCompanions & { userId: string }) => {
     const supabase = createSupabaseClient();
 
-    let query = supabase.from('companions').select();
+    let query = supabase.from('companions').select().eq('author', userId);
 
     if(subject && topic) {
         query = query.ilike('subject', `%${subject}%`)
@@ -76,7 +76,15 @@ export const getRecentSessions = async (limit = 10) => {
         .order('created_at', { ascending: false })
         .limit(limit)
 
-    if(error) throw new Error(error.message);
+    if(error) {
+        console.error('getRecentSessions error:', error);
+        throw new Error(error.message);
+    }
+
+    if (!data) {
+        console.error('getRecentSessions: No data returned');
+        return [];
+    }
 
     return data.map(({ companions }) => companions);
 }
@@ -116,9 +124,9 @@ export const newCompanionPermissions = async () => {
     if(has({ plan: 'pro' })) {
         return true;
     } else if(has({ feature: "3_companion_limit" })) {
-        limit = 3;
-    } else if(has({ feature: "10_companion_limit" })) {
         limit = 10;
+    } else if(has({ feature: "10_companion_limit" })) {
+        limit = 20;
     }
 
     const { count, error } = await supabase
